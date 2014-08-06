@@ -24,7 +24,7 @@ private:
 	std::atomic<bool> isRun;
     std::thread  _thread;
  private: ///timer
-    std::atomic<bool> _isUpdateTimer;
+    std::atomic<unsigned int> _isUpdateTimer;
     std::mutex _lockTimer;
     std::map<unsigned long, std::pair<std::chrono::time_point<std::chrono::system_clock, std::chrono::duration<long long int, std::ratio<1ll, 1000000000ll> > >, std::shared_ptr<TTask> > >  _timeAndTask;
     std::condition_variable cv;
@@ -50,6 +50,9 @@ public :
 ///убираем задачу у таймера
    void killTask(unsigned long task);
 
+   ///останавливаем тред
+   void stop(void);
+
    TestPrimitive test(void)override;
 
 };
@@ -69,6 +72,12 @@ namespace NStrongActorsFunctionOnMessage
     NOT_USED static void addTask(TAbstractMessagePtr message, IActorPtr currentActor)
     {
         castActor<TStorageActors>(currentActor)->addTask(boost::any_cast< std::shared_ptr<TTask> >(message->getData()));
+    }
+    ///останавливаем поток
+    NOT_USED static void stopStorageThread(TAbstractMessagePtr message, IActorPtr currentActor)
+    {
+        (void)message;
+        castActor<TStorageActors>(currentActor)->stop();
     }
     NOT_USED static void executeActor(TAbstractMessagePtr message, IActorPtr currentActor)
     {

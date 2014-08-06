@@ -5,6 +5,7 @@
 #include <list>
 #include <type_traits>
 #include <boost/any.hpp>
+#include <iostream>
 
 #ifdef __GNUC__
 #define NOT_USED __attribute__ ((unused))
@@ -16,88 +17,88 @@
 enum Command
 {
 	//base actors message
-UncnowCommand,
-DontCreateActorOfThisID,
-Satisfiability,
-RemoveActor,
-AddActor,
-ActorDead,
-AddInCounterOnActor,
-RemoveInCounterOnActor,
-SendException,
+UncnowCommand=0,
+DontCreateActorOfThisID=1,
+Satisfiability=2,
+RemoveActor=3,
+AddActor=4,
+ActorDead=5,
+AddInCounterOnActor=6,
+RemoveInCounterOnActor=7,
+SendException=8,
 	//Profiler
-Profiler,
-ProfilerQueue,
-GetProfilerInJson,
+Profiler=9,
+ProfilerQueue=10,
+GetProfilerInJson=11,
 	//storage actors message
-AddActorOnSorage,
-RunStorageThread,
-RemoveActorFromStorage,
-ExecuteActor,
-AddTask,
+AddActorOnSorage=12,
+RunStorageThread=13,
+RemoveActorFromStorage=14,
+ExecuteActor=15,
+AddTask=16,
 	//base
-CreateTable,
-GetTableOnParam,
-PushDataFromTable,
-AddMeasurement,
-GetDataOnTable,
+CreateTable=17,
+GetTableOnParam=18,
+PushDataFromTable=19,
+AddMeasurement=20,
+GetDataOnTable=21,
 	//repeatOnResponseFromUrl
-GetDataOnURLParams,
-CreateActorOnRequest,
-FindFromDisk,
-SendResponse,
-SetStorage,
+GetDataOnURLParams=22,
+CreateActorOnRequest=23,
+FindFromDisk=24,
+SendResponse=25,
+SetStorage=26,
 	//settings
-SetSettings,
-GetSetting,
+SetSettings=27,
+GetSetting=28,
 	//Log
-AddToLog,
-SetCurrentTypeMessageLog,
+AddToLog=29,
+SetCurrentTypeMessageLog=30,
 	//ManagerCNCManager
-GetAddresCNCs,
-AnswerManagerCNCs,
-SetAddresCNCs,
-GetStateCNC,
-GetListParamCNC,
-SetUnsetParamsOnCNC,
-GetHotOscillData,
-GetCommand,
-AddLink,
+GetAddresCNCs=31,
+AnswerManagerCNCs=32,
+SetAddresCNCs=33,
+GetStateCNC=34,
+GetListParamCNC=35,
+SetUnsetParamsOnCNC=36,
+GetHotOscillData=37,
+GetCommand=38,
+AddLink=39,
 	//Protocol
-SendBytes,
-SendCommand,
-SendCommandOnCNC,
+SendBytes=40,
+SendCommand=41,
+SendCommandOnCNC=42,
 	//ListParam
-SetParam,
-SetState,
-StartGetsParam,
-GetParam,
-GetStartGroupParam,
-GetStopGroupParam,
-StopGetsParam,
-GetState,
-UnsetParam,
-SetActiveParams,
-GetListParams,
+SetParam=43,
+SetState=44,
+StartGetsParam=45,
+GetParam=46,
+GetStartGroupParam=47,
+GetStopGroupParam=48,
+StopGetsParam=49,
+GetState=50,
+UnsetParam=51,
+SetActiveParams=52,
+GetListParams=53,
 	//ManagerData
-SendData,
+SendData=54,
 	//TRouter
-AddLinks,
+AddLinks=55,
 	//Port
-InitComPort,
+InitComPort=56,
 	//TGetListParams
-SetListParams,
+SetListParams=57,
 	//TCleverCash
-SendSerialize,
-GetSerialize,
-PushData,
+SendSerialize=58,
+GetSerialize=59,
+PushData=60,
 	//Test
-Test,
+Test=61,
 	//Pool
-SetFreeActorInPool,
-GetFreeAtActor,
-AddActorInPool,
-RemoveActorInPool
+SetFreeActorInPool=62,
+GetFreeAtActor=63,
+AddActorInPool=64,
+RemoveActorInPool=65
 };
 
 ///тип сообщения (в зависимости от типа меняеться приоритет выполнения
@@ -194,6 +195,7 @@ namespace NMessageFunction
 
 	NOT_USED static TAbstractMessagePtr normalMessage(Command command)
 	{
+       // std::cout<<command<<"||"<<std::endl;
 		TAbstractMessagePtr resultNormalMessage(new TMessage<NotType>(command,TypeMessage::Normal,std::list< std::shared_ptr<IActor> >()));
 		return resultNormalMessage;
 	}

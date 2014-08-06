@@ -142,10 +142,10 @@ private:
 	std::shared_ptr<TAbstractQueueElement<T> > _head;
 
     boost::mutex _lockHead;
-	std::atomic<int> _size;
+    std::atomic<size_t> _size;
 public:
     ///получаем размер очереди
-    int unstableSize(void)const{return _size;}//!!!возможны проблемы при обращении из нескольких потоков использовать только для справочной информации
+    size_t unstableSize(void)const{return _size;}//!!!возможны проблемы при обращении из нескольких потоков использовать только для справочной информации
     TQueue():_tail(std::shared_ptr<TAbstractQueueElement<T> >(new TTailQueueElement<T>())),_head(_tail),_lockHead(),_size(0){}
     virtual ~TQueue(){}
 
@@ -160,11 +160,12 @@ public:
 ///пихаем элемент в очередь
     void push(T data)
     {
-        _size++;
+
         std::shared_ptr<TAbstractQueueElement<T> > head(new TQueueElement<T>(data));
         TLock lock(_lockHead);//блокируем голову от возможных попыток записи из других потоков
         _head->setData(head);
         _head=head;
+        _size++;
 
     }
 ///закрываем очередь

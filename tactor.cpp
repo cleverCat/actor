@@ -34,6 +34,7 @@ TActor::~TActor()
 {
     //TMessage<int> messageDead(Command::ActorDead,TypeMessage::Extra, this->getId());
     //_mapFunctorsOnMessage[Command::ActorDead](std::make_shared<TMessage<int> >(messageDead),this);
+    _queueMessage.close();
 
 }
 

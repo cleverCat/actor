@@ -14,7 +14,7 @@ class TTask
         std::chrono::milliseconds _timeout;//таймаут
         const bool _isRepeat;//повторяеться ли таймер
 public:
-    TTask(TAbstractMessagePtr message, IActorPtr actor, std::chrono::milliseconds timeout, const bool isRepeat);
+    TTask(TAbstractMessagePtr message, IActorPtr actor, std::chrono::milliseconds timeout, const bool IsRepeat);
     virtual ~TTask();
     //узнаем повторяеться ли таймер
     bool isRepeat(void) const;

@@ -1,7 +1,7 @@
 #include "actor/TTask.h"
 
 //конструктор задач для таймера
-TTask::TTask(TAbstractMessagePtr message, IActorPtr actor, std::chrono::milliseconds timeout, const bool isRepeat):_message(message), _actor(actor), _timeout(timeout), _isRepeat(isRepeat){}
+TTask::TTask(TAbstractMessagePtr message, IActorPtr actor, std::chrono::milliseconds timeout, const bool IsRepeat):_message(message), _actor(actor), _timeout(timeout), _isRepeat(IsRepeat){}
 
 TTask::~TTask(){}
 
