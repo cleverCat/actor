@@ -8,4 +8,3 @@
 #include HeaderForInlude
 #pragma GCC diagnostic pop
 #undef HeaderForInlude
-

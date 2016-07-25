@@ -8,8 +8,8 @@
 #include <chrono>
 #include <assert.h>
 
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+#include <mutex>
+#include <condition_variable>
 ///!!! WARNING к сожелению std::mutex тек памятью со страшной силой, пришлость его заменить на бустовый аналог
 
 #include <atomic>
@@ -21,7 +21,7 @@ public:
     const char *what() const noexcept;
 };
 
-typedef boost::unique_lock<boost::mutex> TLock;
+typedef std::unique_lock<std::mutex> TLock;
 
 using namespace std;
 
@@ -32,7 +32,7 @@ class TAbstractQueueElement
 public:
 
 	std::shared_ptr<TAbstractQueueElement<T> > _prev;//ссылка на следующий элемент
-    boost::mutex _lockElem; //мьютекс для блокировки обращений к элементу
+    std::mutex _lockElem; //мьютекс для блокировки обращений к элементу
 
 public:
     TAbstractQueueElement():_prev(nullptr),_lockElem(){}//после создания элемент станет головой так что у него нет предыдущего элемента
@@ -78,7 +78,7 @@ template <typename T>
 class TTailQueueElement: public TAbstractQueueElement<T>
 {
 private:
-    boost::condition_variable _pushToQueue;
+    std::condition_variable _pushToQueue;
     bool _isClosed;
 
 public:
@@ -141,7 +141,7 @@ private:
 	std::shared_ptr<TAbstractQueueElement<T> > _tail;
 	std::shared_ptr<TAbstractQueueElement<T> > _head;
 
-    boost::mutex _lockHead;
+    std::mutex _lockHead;
     std::atomic<size_t> _size;
 public:
     ///получаем размер очереди
